@@ -2,64 +2,52 @@
 
 namespace App\Services;
 
-use Google_Client;
-use Google_Service_Gmail;
-use Google_Service_Gmail_Message;
-use Exception;
-use Illuminate\Support\Facades\Log;
+use Google\Client;
+use Google\Service\Gmail;
+use Swift_Message;
 
 class GmailService
 {
 
-    protected $client;
-    protected $service;
-    protected $userEmail;
 
-    public function __construct()
+    public static function sendEmail($to, $subject, $body)
     {
-        // Configure Google Client with credentials from env
-        $client = new Google_Client();
-        $client->setApplicationName(config('app.name') . ' Gmail API');
-        $client->setClientId(env('GMAIL_CLIENT_ID'));
-        $client->setClientSecret(env('GMAIL_CLIENT_SECRET'));
+        $client = new Client();
+        $client->setAuthConfig(storage_path('app/google/credentials.json'));
         $client->setAccessType('offline');
-        $client->setPrompt('select_account consent');
+        $client->setScopes(['https://www.googleapis.com/auth/gmail.send']);
 
-        // We will set the refresh token from ENV and fetch access token
-        $refreshToken = env('GMAIL_REFRESH_TOKEN');
-        if (!$refreshToken) {
-            throw new Exception('GMAIL_REFRESH_TOKEN not configured');
-        }
+        $client->setAccessToken(json_decode(file_get_contents(storage_path('app/google/token.json')), true));
 
-        $client->refreshToken($refreshToken);
-        $accessToken = $client->getAccessToken();
-
-        $client->setAccessToken($accessToken);
-        // If token expired, refresh
         if ($client->isAccessTokenExpired()) {
-            $client->fetchAccessTokenWithRefreshToken($refreshToken);
+            $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
+
+            file_put_contents(
+                storage_path('app/google/token.json'),
+                json_encode($client->getAccessToken())
+            );
         }
 
-        $this->client = $client;
-        $this->service = new Google_Service_Gmail($client);
-        $this->userEmail = env('GMAIL_USER'); // the "From" address
-    }
+        $service = new Gmail($client);
 
+        // -----------------------------
+        // Build MIME email manually
+        // -----------------------------
+        $rawMessageString =
+            "From: Your App <yourgmail@gmail.com>\r\n" .
+            "To: <$to>\r\n" .
+            "Subject: $subject\r\n" .
+            "MIME-Version: 1.0\r\n" .
+            "Content-Type: text/html; charset=utf-8\r\n\r\n" .
+            $body;
 
-    public function sendMessage(string $to, string $subject, string $htmlBody)
-    {
+        // Encode to Base64URL
+        $rawMessage = rtrim(strtr(base64_encode($rawMessageString), '+/', '-_'), '=');
 
-        Log::info('Sending email to ' . $to);
-        $rawMessageString = $this->buildRawMessage($to, $subject, $htmlBody);
-        $message = new Google_Service_Gmail_Message();
-        $message->setRaw($rawMessageString);
+        // Send Email
+        $message = new Gmail\Message();
+        $message->setRaw($rawMessage);
 
-        try {
-            return $this->service->users_messages->send($this->userEmail, $message);
-        } catch (Exception $e) {
-            // Log the error and rethrow or handle gracefully
-            Log::error('Gmail API error: ' . $e->getMessage());
-            throw $e;
-        }
+        return $service->users_messages->send('me', $message);
     }
 }
