@@ -44,6 +44,34 @@ Execute the following command to run the database migrations:To run the Laravel 
 - Go to APIs & Services → Library
 - Search Gmail API → Click Enable
 
+### Step 2: Open OAuth Consent Screen
+Create User type and App Information
+- User Type: External
+
+### Step 3: Create OAuth Credentials
+- Go to APIs & Services → Credentials
+- Click Create Credentials → OAuth Client ID (Note: Auth redirect URI should be like while creating Client ID - App_base_url/callback like http://127.0.0.1:8000/callback)
+- App Type → Desktop App
+- Download the JSON file: after finishing the download remname it credentials.json
+
+### Step 4: Put credentials.json in Laravel
+- Create folder: storage/app/google (Path of the folder )
+- File path like : storage/app/google/credentials.json
+
+### Step 5: Install Google API Client Package
+- Run : composer require google/apiclient:^2.13
+
+### Step 6: Generate Token
+- Run : php artisan gmail:token
+  Then
+- Open URL → Login with Gmail → Allow Access
+- Copy authorization code
+- Paste in terminal
+- It creates: storage/app/google/token.json
+
+
+
+
 
 
 
