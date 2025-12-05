@@ -3,9 +3,9 @@
 
 ### Step 1: Install Required Software
 
-- **PHP
-- **Composer
-- **Database (Postgres or MySQL
+- PHP
+- Composer
+- Database (Postgres or MySQL)
 
 ### Step 2: Clone the GitHub Repository
 
