@@ -36,5 +36,28 @@ Execute the following command to run the database migrations:To run the Laravel 
 - php artisan serve (Run in terminal)
 
 
+## GMAIL API EMAIL SENDING IN LARAVEL — FULL SETUP
+
+### Step 1: Enable Gmail API
+- Go to Google Cloud Console ( https://console.cloud.google.com/)
+- Create a New Project → Select it.
+- Go to APIs & Services → Library
+- Search Gmail API → Click Enable
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
