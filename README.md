@@ -49,7 +49,7 @@ Create User type and App Information
 
 ### Step 3: Create OAuth Credentials
 - Go to APIs & Services → Credentials
-- Click Create Credentials → OAuth Client ID (Note: Auth redirect URI should be like while creating Client ID - App_base_url/callback like http://127.0.0.1:8000/callback)
+- Click Create Credentials → OAuth Client ID (Note: Auth redirect URI should be like : App_base_url/callback , Example: http://127.0.0.1:8000/callback , while creating Client ID)
 - App Type → Desktop App
 - Download the JSON file: after finishing the download remname it credentials.json
 
@@ -62,7 +62,7 @@ Create User type and App Information
 
 ### Step 6: Generate Token
 - Run : php artisan gmail:token
-  Then
+  Then 
 - Open URL → Login with Gmail → Allow Access
 - Copy authorization code
 - Paste in terminal
