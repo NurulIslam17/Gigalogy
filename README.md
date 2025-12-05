@@ -69,6 +69,12 @@ Create User type and App Information
 - It creates: storage/app/google/token.json
 
 
+## Final Check
+- Check Database server is active
+- Run : php artisan serve
+- Run : php artisan queue:work
+
+
 
 
 
