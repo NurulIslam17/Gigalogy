@@ -31,7 +31,7 @@ Execute the following command to run the database migrations:
 - php artisan migrate (Run in terminal)
 
 
-### Step 6: Serve the Application
+### Step 7: Serve the Application
 Execute the following command to run the database migrations:To run the Laravel development server, use the following command:
 - php artisan serve (Run in terminal)
 
