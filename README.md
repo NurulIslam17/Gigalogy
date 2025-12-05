@@ -11,7 +11,7 @@
 
 - https://github.com/NurulIslam17/Gigalogy.git
 
-### Step 3: Clone the GitHub Repository
+### Step 3: Install Dependencies
 
 - composer install (Run in terminal)
 
@@ -26,10 +26,9 @@ Generate the application key using the following command:
 
 - php artisan key:generate (Run in terminal)
 
-### Step 6: Generate Application Key
+### Step 6: Run Migrations
 Execute the following command to run the database migrations:
 - php artisan migrate (Run in terminal)
-
 
 ### Step 7: Serve the Application
 Execute the following command to run the database migrations:To run the Laravel development server, use the following command:
