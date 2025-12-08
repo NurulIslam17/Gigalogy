@@ -68,6 +68,16 @@ Create User type and App Information
 - Paste in terminal
 - It creates: storage/app/google/token.json
 
+## POSTMAN SETUP
+
+### Send request to
+- http://127.0.0.1:8000/api/register (base_url/api/register)
+- JSON Format is - {
+    "name":"User 1",
+    "email":"nurulcse09@gmail.com",
+    "password":"n1212223"
+}
+
 
 ## Final Check
 - Check Database server is active
