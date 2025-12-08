@@ -1,51 +1,30 @@
-# Use an official PHP image with FPM
 FROM php:8.2-fpm
 
-# set working dir
 WORKDIR /var/www
 
-# Install system dependencies
 RUN apt-get update && apt-get install -y \
-    git \
-    curl \
-    libpq-dev \
-    libzip-dev \
-    unzip \
-    zip \
-    libonig-dev \
-    libxml2-dev \
-    gnupg2 \
-    sudo \
-    libpng-dev \
-    libjpeg-dev \
-    libfreetype6-dev \
-    libpng-dev \
-    libwebp-dev \
-    && rm -rf /var/lib/apt/lists/*
+    git curl libpq-dev libzip-dev unzip libxml2-dev \
+    libpng-dev libjpeg-dev libfreetype6-dev libwebp-dev \
+    libonig-dev libicu-dev && \
+    rm -rf /var/lib/apt/lists/*
 
-# Install PHP extensions required by Laravel
-RUN docker-php-ext-install pdo pdo_pgsql zip intl mbstring xml gd
+# PHP extensions
+RUN docker-php-ext-configure intl \
+    && docker-php-ext-install intl
 
-# Install composer
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
+    && docker-php-ext-install gd
+
+RUN docker-php-ext-install pdo pdo_pgsql mbstring zip xml
+
 COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
 
-# Create www-data user (uid/gid 1000 to match typical dev user, adjust if needed)
-RUN groupadd -g 1000 www && useradd -u 1000 -ms /bin/bash -g www www
-
-# Copy composer.lock and composer.json to install dependencies
-COPY composer.lock composer.json /var/www/
-
-# Composer install (no dev in production; we will use dev in docker-compose for convenience)
-RUN composer install --no-interaction --prefer-dist --no-progress
-
-# Copy application code
 COPY . /var/www
 
-# Set permissions for storage and bootstrap cache
-RUN chown -R www:www /var/www/storage /var/www/bootstrap/cache
+RUN composer install --no-interaction --prefer-dist --no-progress
 
-# Expose port for php-fpm socket is via unix socket; container doesn't expose tcp by default
-USER www
+RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
-# Default command
+USER www-data
+
 CMD ["php-fpm"]
