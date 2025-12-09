@@ -11,4 +11,8 @@ class UserRepository
         return User::create($data);
     }
 
+    public function getAllUsers()
+    {
+        return User::get();
+    }
 }

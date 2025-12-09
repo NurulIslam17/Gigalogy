@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Jobs\SendEmail;
+use App\Models\User;
 use App\Repositories\UserRepository;
 
 class RegisterService
@@ -19,5 +20,10 @@ class RegisterService
         $user = $this->userRepository->register($data);
         SendEmail::dispatch($user->email);
         return $user;
+    }
+
+    public function getAllUsers()
+    {
+        return $this->userRepository->getAllUsers();
     }
 }
