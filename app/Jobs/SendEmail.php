@@ -21,7 +21,7 @@ class SendEmail implements ShouldQueue
 
     public function handle(GmailService $gmailService): void
     {
-        // Mail::to($this->email)->send(new ConfirmationMail($this->email));
+        // Mail::to($this->email)->send(new ConfirmationMail($this->email)); // to Chek mailtrap sending
         $to = $this->email;
         $subject = 'Gigalogy Registration';
         $body = view('emails.welcome', ['email' => $to])->render();

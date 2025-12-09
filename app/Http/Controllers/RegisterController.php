@@ -23,5 +23,9 @@ class RegisterController extends Controller
         }
         return $this->errorResponse('Registration failed', [], 500);
     }
-
+    public function getAllUsers()
+    {
+        $user = $this->registerService->getAllUsers();
+        return $this->successResponse($user, 'User fetched successfully');
+    }
 }
