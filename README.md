@@ -89,19 +89,19 @@ Create User type and App Information
 
 ### Send request to
 - http://127.0.0.1:8000/api/register (base_url/api/register)
-- JSON Format is - {
-    "name":"User 1",
-    "email":"nurulcse09@gmail.com",
-    "password":"n1212223"
-
-}
+- JSON Format is
+       {
+            "name":"User 1",
+            "email":"nurulcse09@gmail.com",
+            "password":"n1212223"
+        }
 - http://127.0.0.1:8000/api/users (base_url/api/register) to fetch users list
 
 
-## Final Check (Not required if using docker)
+## Final Check
 - Check Database server is active
-- Run : php artisan serve
-- Run : php artisan queue:work
+- Run : php artisan serve (Not required if using docker)
+- Run : php artisan queue:work (Not required if using docker)
 
 
 
