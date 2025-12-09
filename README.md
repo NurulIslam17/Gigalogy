@@ -91,9 +91,9 @@ Create User type and App Information
 - http://127.0.0.1:8000/api/register (base_url/api/register)
 - JSON Format is
        {
-            "name":"User 1",
-            "email":"nurulcse09@gmail.com",
-            "password":"n1212223"
+            "name":"User Name",
+            "email":"validemail@gmail.com",
+            "password":"user_password"
         }
 - http://127.0.0.1:8000/api/users (base_url/api/register) to fetch users list
 
