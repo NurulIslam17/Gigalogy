@@ -83,6 +83,7 @@ Create User type and App Information
 - Run Docker: docker-compose up --build
 - Run Migrations: docker exec -it laravel_app php artisan migrate
 - Remove container: docker-compose down -v (Optinal)
+- Re-run : docker-compose down -d (if required)
 
 
 ## POSTMAN SETUP
