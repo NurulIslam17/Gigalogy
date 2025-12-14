@@ -51,7 +51,7 @@ Create User type and App Information
 - Go to APIs & Services → Credentials
 - Click Create Credentials → OAuth Client ID (Note: Auth redirect URI should be like : App_base_url/callback , Example: http://127.0.0.1:8000/callback , while creating Client ID)
 - App Type → Desktop App
-- Download the JSON file: after finishing the download remname it credentials.json
+- Download the JSON file: after finishing the download rename it credentials.json
 
 ### Step 4: Put credentials.json in Laravel
 - Create folder: storage/app/google (Path of the folder )
